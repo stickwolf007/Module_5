@@ -66,11 +66,13 @@ class UrTube:
     def watch_video(self, text):
         if self.current_user is None:
             print(f'Войдите в аккаунт, чтобы смотреть видео')
-        elif self.current_user.age < 18:
-            print(f'Вам нет 18 лет, пожалуйста покиньте страницу')
         else:
             for i in self.videos:
-                if text in i.title:
+                if text is i.title:
+                    if i.adult_mode and self.current_user.age < 18:
+                        print(f'Вам нет 18 лет, пожалуйста покиньте страницу')
+
+                    else:
                         for j in range(1, i.duration + 1):
                             time.sleep(1)
                             print(j)
@@ -83,7 +85,7 @@ class UrTube:
 
 ur = UrTube()
 v1 = Video('Лучший язык программирования 2024 года', 200)
-v2 = Video('Для чего девушкам парень программист?', 1, adult_mode=True)
+v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
 
 # Добавление видео
 ur.add(v1, v2)
